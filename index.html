@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Task Scheduler</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="p-3">
+    <h1 class="text-gray-500 text-xl text-center font-bold">Input Form</h1>
+    <p class="text-center text-xs italic mb-5">(post for today)</p>
+    <form id="taskForm" class="shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-xl px-4 py-3 text-center">
+      <textarea id="taskInput" placeholder="Input content" required
+        class="w-full bg-transparent rounded-md transition-all h-[80px] resize-none border border-solid border-gray-300 p-4 focus-within:border-blue-300 text-sm"></textarea>
+      <div class="grid grid-cols-2 gap-2 mt-1">
+        <input id="hourInput" type="number" placeholder="Hour" required value="8" min="1" max="8"
+          class="w-full bg-transparent rounded-md transition-all border border-solid border-gray-300 p-2 focus-within:border-blue-300 text-sm" />
+        <select id="projectInput" required
+          class="p-2 bg-transparent rounded-md transition-all border border-solid border-gray-300 focus-within:border-blue-300 text-sm">
+          <option value="" disabled selected>Select Project</option>
+          <option value="[4] 25-Self Research">[4] 25-Self Research</option>
+          <option value="[3] 19-Other">[3] 19-Other</option>
+          <option value="[2] 17-TE Website">[2] 17-TE Website</option>
+          <option value="[29] TE - Order System">[29] TE - Order System</option>
+          <option value="[71] KanbanCloud - Noary">[71] KanbanCloud - Noary</option>
+        </select>
+      </div>
+
+      <button id="submitBtn" type="submit" class="mt-5">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const submitBtn = document.getElementById('submitBtn');
+    const taskInput = document.getElementById('taskInput');
+    const hourInput = document.getElementById('hourInput');
+    const projectInput = document.getElementById('projectInput');
+
+    submitBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const taskValue = taskInput.value.trim();
+      const hourValue = hourInput.value;
+      const projectValue = projectInput.value;
+      console.log({taskValue, hourValue, projectValue});
+      if (taskValue && hourValue && projectValue) {
+        window.electronAPI.submitTask({taskValue, hourValue, projectValue});
+      } else {
+        alert('All fields are required');
+      }
+    });
+  </script>
+</body>
+
+</html>
